@@ -119,5 +119,5 @@ and the **INFN Pisa computing group** for providing the resources that made the 
 
 ---
 
-### 🧩 “Symmetry, topology, and modularity are not constraints — they are the hidden geometry of quantum consistency.” ✨
+##
 
