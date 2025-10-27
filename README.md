@@ -33,37 +33,28 @@ This work demonstrates that the modular bootstrap — traditionally applied to t
 
 ---
 
-## ⚙️ Repository Structure
+## ⚙️ Repository Files Description
 
-📦 modular-bootstrap-S3/  
- ┣ 📂 mathematica_scripts/ → Wolfram scripts generating JSON problems  
- ┣ 📂 python_scripts/ → Python automation, bisection and plotting tools  
- ┣ 📂 sdpb_configs/ → SDPB parameter and configuration files  
- ┣ 📂 results/ → Numerical outputs, JSON logs, and bounds  
- ┣ 📂 figures/ → Plots and visualizations  
- ┣ 📜 thesis_summary.pdf → Abstract or summary of the Master’s Thesis  
- ┗ 📜 README.md → This file ✨  
+| File | Description |
+|------|--------------|
+| **PROBLEM_to_JSON_s3_script_vm.wls** | Mathematica script that builds the modular bootstrap problem for the non-abelian \( S_3 \) symmetry. It generates the partition functions of different sectors and exports them in JSON format. |
+| **PROBLEM_to_JSON_script_vm.wls** | Base Mathematica script for the modular bootstrap without additional symmetries, used for comparison and debugging. |
+| **JSON_to_JSONCLEAN_OK0.py** | Python script that cleans and reformats the JSON files produced by Mathematica, removing non-numerical entries and preparing them for SDPB input. |
+| **run_bisection_commentato_vm_FIXED.py** | Main Python driver that performs the bisection search for the conformal bound. It automates the entire process: JSON generation, SDPB execution, and log collection. |
+| **run_bisection_S3_logger_vm1.py** | Alternative version of the bisection script with extended logging and debug information, optimized for \( S_3 \) tests. |
+| **plot_Delta(c).py** | Visualization tool that reads the numerical results (e.g. `bound_results_S3_cached.json`) and plots the conformal bound \( \Delta_st(c) \) as a function of the central charge. |
+| **README.md** | Project documentation — this file ✨ explaining the purpose, workflow, and usage of the entire pipeline. |  
 
 ---
 
 ## 🚀 How to Run
 
-1. **Generate the bootstrap problem**
+1. **Solve using SDPB**
    ```bash
-   wolframscript -file PROBLEM_to_JSON_s3_script.wls
+   python3 run_bisection_##.py
    ```
 
-2. **Clean and convert the JSON**
-   ```bash
-   python3 JSON_to_JSONCLEAN_OK0.py out_raw.json file_clean.json
-   ```
-
-3. **Translate to SDP and solve using SDPB**
-   ```bash
-   docker run --rm -v $(pwd):/work bootstrapcollaboration/sdpb:master      sdpb --precision=2048 --procs=4 --maxIterations=1800      --parameterFile params.yml
-   ```
-
-4. **Visualize results**
+2. **Visualize results**
    ```bash
    python3 plot_bounds.py
    ```
